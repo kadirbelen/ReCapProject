@@ -9,26 +9,38 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            BrandTest();
+            //BrandTest();
             CarTest();
         }
 
         private static void BrandTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            brandManager.Add(new Brand
+            var result = brandManager.GetAll();
+            //brandManager.Add(new Brand
+            //{
+            //    Name = "Peugeot"
+            //});
+            if (result.Success)
             {
-                Name = "Peugeot"
-            });
-            foreach (var color in brandManager.GetAll())
-            {
-                Console.WriteLine(color.Name);
+                foreach (var color in result.Data)
+                {
+                    Console.WriteLine(color.Name);
+                }
+
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+           
         }
 
         private static void CarTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
+            var result1 = carManager.GetAll();
+            var result = carManager.GetCarDetailDtos();
             //carManager.Add(new Car
             //{
 
@@ -39,11 +51,19 @@ namespace ConsoleApp
             //BrandId=1,
 
             //});
-
-            foreach (var car in carManager.GetCarDetailDtos())
+            if (result.Success)
             {
-                Console.WriteLine(car.BrandName + "/" + car.Description + "/" + car.ColorName + "/" + car.DailyPrice);
+                //Console.WriteLine(result1.Message);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.BrandName + "/" + car.Description + "/" + car.ColorName + "/" + car.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+           
         }
     }
 }

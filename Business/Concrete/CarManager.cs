@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Concrete.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -17,42 +19,41 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
             if (car.Description.Length >= 2 && car.DailyPrice > 0)
             {
-                Console.WriteLine("Araba eklendi.");
                 _carDal.Add(car);
+                return new SuccessDataResult<List<Car>>(Messages.CarAdded);
             }
-            else
-            {
-                Console.WriteLine("Araba eklenemedi. Araba ismi minimum 2 karakter olmalıdır ve Araba günlük fiyatı 0'dan büyük olmalıdır.");
-            }
+            return new ErrorDataResult<List<Car>>(Messages.CarNameInvalid);
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarsListed);
         }
 
-        public List<Car> GetAllByBrandId(int id)
+        public IDataResult<List<Car>> GetAllByBrandId(int id)
         {
-            return _carDal.GetAll(p => p.BrandId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == id));
         }
 
-        public List<CarDetailDto> GetCarDetailDtos()
+        public IDataResult<List<CarDetailDto>> GetCarDetailDtos()
         {
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             _carDal.Update(car);
+            return new SuccessResult();
         }
     }
 }
