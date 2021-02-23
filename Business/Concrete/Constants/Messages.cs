@@ -11,6 +11,9 @@ namespace Business.Concrete.Constants
         public static string CarsListed = "Arabalar Listelendi";
         public static string MaintenanceTime = "Sistem bakımda";
         public static string CarDeleted = "Araba listeden silindi";
+        public static string CarRented = "Araba Kiralandı";
+        public static string RentalCouldNotAdded = "Araba Kiralanamadı";
         
+
     }
 }

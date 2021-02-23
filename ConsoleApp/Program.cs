@@ -10,7 +10,61 @@ namespace ConsoleApp
         static void Main(string[] args)
         {
             //BrandTest();
-            CarTest();
+            //CarTest();
+            //RentalAdd();
+            //UserTest();
+            //CustomerTest();
+        }
+
+        private static void CustomerTest()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            var result = customerManager.Add(new Customer
+            {
+                UserId = 1,
+                CompanyName = "Kadir Belen"
+            });
+            if (result.Success)
+            {
+                foreach (var customer in customerManager.GetAll().Data)
+                {
+                    Console.WriteLine(customer.UserId + "/" + customer.CompanyName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void UserTest()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+            var result = userManager.Add(new User { FirstName = "Kadir", LastName = "Belen", Email = "Kb52@gmail.com", Password = "12345" });
+            if (result.Success)
+            {
+                foreach (var user in userManager.GetAll().Data)
+                {
+                    Console.WriteLine(user.FirstName + "/" + user.LastName + "/" + user.Email + "/" + user.Password);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void RentalAdd()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.Add(new Rental
+            {
+                CarId = 1,
+                CustomerId = 1,
+                RentDate = new DateTime(2021, 02, 15),
+                ReturnDate = new DateTime(2021, 02, 21)
+            });
+            Console.WriteLine(result.Message);
         }
 
         private static void BrandTest()
@@ -33,7 +87,7 @@ namespace ConsoleApp
             {
                 Console.WriteLine(result.Message);
             }
-           
+
         }
 
         private static void CarTest()
@@ -63,7 +117,7 @@ namespace ConsoleApp
             {
                 Console.WriteLine(result.Message);
             }
-           
+
         }
     }
 }

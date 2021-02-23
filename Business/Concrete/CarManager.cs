@@ -24,9 +24,9 @@ namespace Business.Concrete
             if (car.Description.Length >= 2 && car.DailyPrice > 0)
             {
                 _carDal.Add(car);
-                return new SuccessDataResult<List<Car>>(Messages.CarAdded);
+                return new SuccessResult(Messages.CarAdded);
             }
-            return new ErrorDataResult<List<Car>>(Messages.CarNameInvalid);
+            return new ErrorResult(Messages.CarNameInvalid);
         }
 
         public IResult Delete(Car car)
