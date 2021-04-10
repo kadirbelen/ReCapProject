@@ -14,6 +14,7 @@ namespace ConsoleApp
             //RentalAdd();
             //UserTest();
             //CustomerTest();
+            Console.WriteLine("Mesaj");
         }
 
         private static void CustomerTest()
